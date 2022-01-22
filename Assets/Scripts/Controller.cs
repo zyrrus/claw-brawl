@@ -33,7 +33,11 @@ namespace ClawBrawl
             if (hasMoveInput)
             {
                 rb.AddForce(inputDir * moveSpeed);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(inputDir), 15 * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(inputDir),
+                    15 * Time.deltaTime
+                );
             }
         }
 
