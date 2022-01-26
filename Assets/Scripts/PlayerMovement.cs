@@ -36,7 +36,7 @@ namespace ClawBrawl
             if (inputDir == Vector2.zero) return;
 
             Vector3 lookDir = new Vector3(inputDir.x, 0, inputDir.y);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), 0.7f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), 0.2f);
         }
     }
 }

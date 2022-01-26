@@ -6,6 +6,5 @@ namespace ClawBrawl
 {
     public class WeaponController : MonoBehaviour
     {
-
     }
 }
