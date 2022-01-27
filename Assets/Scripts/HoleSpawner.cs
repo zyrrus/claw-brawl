@@ -40,7 +40,7 @@ namespace ClawBrawl
         private void SpawnHole()
         {
             GameObject hole = GameObject.Instantiate(holePrefab, Vector3.zero, Quaternion.identity);
-            hole.transform.parent = transform;
+            hole.transform.SetParent(transform);
         }
     }
 }
