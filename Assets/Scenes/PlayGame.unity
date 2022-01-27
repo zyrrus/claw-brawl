@@ -578,6 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
+  doFacing: 1
 --- !u!4 &378561292105730663
 Transform:
   m_ObjectHideFlags: 0
@@ -622,8 +623,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587cf76f710a67cd8acf84985848fc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashStrength: 15
+  canDash: 1
+  dashStrength: 20
   dashCooldown: 3
+  dashTimer: 0
+  canThrow: 1
+  throwStrength: 0
+  throwCooldown: 0
+  canSpin: 1
+  isSpinning: 0
+  spinSpeed: 720
+  spinDuration: 0
+  spinCooldown: 0
 --- !u!23 &378561292584865648
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -752,22 +763,6 @@ MonoBehaviour:
     m_ActionId: 790821ce-2fa3-480c-a20c-e43f1da39c19
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 378561292105730665}
-        m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
-        m_MethodName: OnDash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f685f1d9-3ff9-4c46-bfd7-576550805ef7
-    m_ActionName: Player/Fire[/Mouse/leftButton]
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 819698a7-dce4-4e8b-b91b-c662af75187c
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
@@ -807,6 +802,54 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5bfc6290-6585-4877-b0a3-3f21b3d58b00
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 378561292105730665}
+        m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 41d6dc1e-1bfd-4480-9e9d-bb2bc5d580f9
+    m_ActionName: Player/Dash[/Keyboard/shift,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 378561292105730665}
+        m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
+        m_MethodName: OnSpin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d36caef0-eb79-42e0-af19-be7d9a517c51
+    m_ActionName: Player/Spin[/Keyboard/q,/Keyboard/ctrl]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 378561292105730665}
+        m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
+        m_MethodName: OnThrow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 774c1a5c-5b07-4be0-a496-70907656e208
+    m_ActionName: Player/Throw[/Keyboard/e,/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
