@@ -7,24 +7,46 @@ namespace ClawBrawl
     public class AbilityController : MonoBehaviour
     {
         private Rigidbody rb;
+        private PlayerMovement player;
 
+        [SerializeField] private bool canDash = true;
         [SerializeField] private float dashStrength;
         [SerializeField] private float dashCooldown;
-        private float dashTimer;
+        [SerializeField] private float dashTimer;
+
+        [SerializeField] private bool canThrow = true;
+        [SerializeField] private float throwStrength;
+        [SerializeField] private float throwCooldown;
+        private float throwTimer;
+
+        [SerializeField] private bool canSpin = true;
+        [SerializeField] private bool isSpinning;
+        [SerializeField] private float spinSpeed;
+        [SerializeField] private float spinDuration;
+        [SerializeField] private float spinCooldown;
+        private float spinTimer;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            player = GetComponent<PlayerMovement>();
         }
 
         private void Update()
         {
-            dashTimer -= Time.deltaTime;
+
+            if (dashTimer >= 0)
+                dashTimer -= Time.deltaTime;
+
+            if (isSpinning)
+            {
+                transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime);
+            }
         }
 
         public void OnDash()
         {
-            if (dashTimer > 0) return;
+            if (!canDash || dashTimer > 0) return;
 
             rb.AddForce(transform.forward * dashStrength, ForceMode.Impulse);
             dashTimer = dashCooldown;
@@ -37,7 +59,8 @@ namespace ClawBrawl
 
         public void OnSpin()
         {
-
+            player.doFacing = !player.doFacing;
+            isSpinning = !isSpinning;
         }
     }
 }

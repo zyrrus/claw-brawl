@@ -8,13 +8,14 @@ namespace ClawBrawl
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private float moveSpeed;
+        public bool doFacing = true;
 
         private Vector2 inputDir;
 
         private void Update()
         {
             HandleMove();
-            HandleRotate();
+            if (doFacing) HandleRotate();
         }
 
         public void MovePlayer(InputAction.CallbackContext context)
