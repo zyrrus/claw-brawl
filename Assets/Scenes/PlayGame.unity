@@ -518,6 +518,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d506280e96c0461a0163c6f6c37fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throwDuration: 0.5
+  throwSpeed: 50
+  throwSpinSpeed: 720
+  isThrowing: 0
+  isLeaving: 1
 --- !u!65 &1399943321
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -623,12 +628,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587cf76f710a67cd8acf84985848fc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDash: 1
+  weapon: {fileID: 1399943320}
   dashStrength: 30
   dashCooldown: 2
-  canThrow: 1
-  throwStrength: 0
-  throwCooldown: 0
+  throwCooldown: 1
   throwTimer: 0
   spinSpeed: 1080
   spinDuration: 2
@@ -805,7 +808,7 @@ MonoBehaviour:
       - m_Target: {fileID: 378561292105730665}
         m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
         m_MethodName: OnDash
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -821,7 +824,7 @@ MonoBehaviour:
       - m_Target: {fileID: 378561292105730665}
         m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
         m_MethodName: OnSpin
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -837,7 +840,7 @@ MonoBehaviour:
       - m_Target: {fileID: 378561292105730665}
         m_TargetAssemblyTypeName: ClawBrawl.AbilityController, Assembly-CSharp
         m_MethodName: OnThrow
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

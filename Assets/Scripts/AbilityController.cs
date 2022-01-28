@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ClawBrawl
 {
@@ -8,26 +9,26 @@ namespace ClawBrawl
     {
         private Rigidbody rb;
         private PlayerMovement player;
+        [SerializeField] private WeaponController weapon;
 
         [Header("Dash")]
-        [SerializeField] private bool canDash = true;
         [SerializeField] private float dashStrength;
         [SerializeField] private float dashCooldown;
         private float dashTimer;
+        private bool canDash = true;
 
         [Header("Throw")]
-        [SerializeField] private bool canThrow = true;
-        [SerializeField] private float throwStrength;
         [SerializeField] private float throwCooldown;
         [SerializeField] private float throwTimer;
+        private bool doneThrowing = true;
 
         [Header("Spin")]
         [SerializeField] private float spinSpeed;
         [SerializeField] private float spinDuration;
         [SerializeField] private float spinCooldown;
         private float spinTimer;
-        private bool canSpin = true;
         private bool isSpinning;
+        private bool canSpin = true;
 
         private void Awake()
         {
@@ -44,6 +45,14 @@ namespace ClawBrawl
                 dashTimer -= Time.deltaTime;
 
             /// === Throw =================================================
+            if (throwTimer >= 0)
+                throwTimer -= Time.deltaTime;
+
+            if (!doneThrowing && weapon.CanThrow())
+            {
+                doneThrowing = true;
+                throwTimer = throwCooldown;
+            }
 
             /// === Spin ==================================================
 
@@ -63,21 +72,27 @@ namespace ClawBrawl
                 transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime);
         }
 
-        public void OnDash()
+        public void OnDash(InputAction.CallbackContext context)
         {
+            if (!context.performed) return;
             if (!canDash || dashTimer > 0) return;
 
             rb.AddForce(transform.forward * dashStrength, ForceMode.Impulse);
             dashTimer = dashCooldown;
         }
 
-        public void OnThrow()
+        public void OnThrow(InputAction.CallbackContext context)
         {
+            if (!context.performed) return;
+            if (!weapon.CanThrow() || throwTimer > 0) return;
 
+            doneThrowing = false;
+            weapon.Throw();
         }
 
-        public void OnSpin()
+        public void OnSpin(InputAction.CallbackContext context)
         {
+            if (!context.performed) return;
             if (isSpinning || spinTimer > -spinCooldown) return;
 
             spinTimer = spinDuration;
