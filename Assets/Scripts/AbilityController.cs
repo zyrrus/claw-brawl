@@ -75,7 +75,7 @@ namespace ClawBrawl
         public void OnDash(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (!canDash || dashTimer > 0) return;
+            if (isSpinning || !canDash || dashTimer > 0) return;
 
             rb.AddForce(transform.forward * dashStrength, ForceMode.Impulse);
             dashTimer = dashCooldown;
@@ -84,7 +84,7 @@ namespace ClawBrawl
         public void OnThrow(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (!weapon.CanThrow() || throwTimer > 0) return;
+            if (isSpinning || !weapon.CanThrow() || throwTimer > 0) return;
 
             doneThrowing = false;
             weapon.Throw();
@@ -93,7 +93,7 @@ namespace ClawBrawl
         public void OnSpin(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (isSpinning || spinTimer > -spinCooldown) return;
+            if (!doneThrowing || isSpinning || spinTimer > -spinCooldown) return;
 
             spinTimer = spinDuration;
             player.doFacing = false;
