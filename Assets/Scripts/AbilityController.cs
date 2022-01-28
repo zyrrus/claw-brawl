@@ -9,22 +9,25 @@ namespace ClawBrawl
         private Rigidbody rb;
         private PlayerMovement player;
 
+        [Header("Dash")]
         [SerializeField] private bool canDash = true;
         [SerializeField] private float dashStrength;
         [SerializeField] private float dashCooldown;
-        [SerializeField] private float dashTimer;
+        private float dashTimer;
 
+        [Header("Throw")]
         [SerializeField] private bool canThrow = true;
         [SerializeField] private float throwStrength;
         [SerializeField] private float throwCooldown;
-        private float throwTimer;
+        [SerializeField] private float throwTimer;
 
-        [SerializeField] private bool canSpin = true;
-        [SerializeField] private bool isSpinning;
+        [Header("Spin")]
         [SerializeField] private float spinSpeed;
         [SerializeField] private float spinDuration;
         [SerializeField] private float spinCooldown;
         private float spinTimer;
+        private bool canSpin = true;
+        private bool isSpinning;
 
         private void Awake()
         {
@@ -34,14 +37,30 @@ namespace ClawBrawl
 
         private void Update()
         {
+            /// === Dash ==================================================
 
+            // Update timer
             if (dashTimer >= 0)
                 dashTimer -= Time.deltaTime;
 
-            if (isSpinning)
+            /// === Throw =================================================
+
+            /// === Spin ==================================================
+
+            // Update timer
+            if (spinTimer >= -spinCooldown)
+                spinTimer -= Time.deltaTime;
+
+            // Stop spin
+            if (spinTimer <= 0)
             {
-                transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime);
+                isSpinning = false;
+                player.doFacing = true;
             }
+
+            // Perform spin
+            if (isSpinning)
+                transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime);
         }
 
         public void OnDash()
@@ -59,8 +78,11 @@ namespace ClawBrawl
 
         public void OnSpin()
         {
-            player.doFacing = !player.doFacing;
-            isSpinning = !isSpinning;
+            if (isSpinning || spinTimer > -spinCooldown) return;
+
+            spinTimer = spinDuration;
+            player.doFacing = false;
+            isSpinning = true;
         }
     }
 }

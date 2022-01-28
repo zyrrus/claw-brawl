@@ -515,7 +515,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399943318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b974ba153aff68f429208a4eeee63c95, type: 3}
+  m_Script: {fileID: 11500000, guid: 88d506280e96c0461a0163c6f6c37fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &1399943321
@@ -624,17 +624,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canDash: 1
-  dashStrength: 20
-  dashCooldown: 3
-  dashTimer: 0
+  dashStrength: 30
+  dashCooldown: 2
   canThrow: 1
   throwStrength: 0
   throwCooldown: 0
-  canSpin: 1
-  isSpinning: 0
-  spinSpeed: 720
-  spinDuration: 0
-  spinCooldown: 0
+  throwTimer: 0
+  spinSpeed: 1080
+  spinDuration: 2
+  spinCooldown: 3
 --- !u!23 &378561292584865648
 MeshRenderer:
   m_ObjectHideFlags: 0
