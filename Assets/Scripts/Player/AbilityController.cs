@@ -54,7 +54,6 @@ namespace ClawBrawl
                 dashIcon.Color();
 
             /// === Throw =================================================
-            Debug.Log($"{throwTimer}; {doneThrowing}; {weapon.CanThrow()}");
             if (throwTimer >= 0)
                 throwTimer -= Time.deltaTime;
             else if (doneThrowing && weapon.CanThrow())
