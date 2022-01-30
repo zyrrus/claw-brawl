@@ -19,8 +19,8 @@ namespace ClawBrawl
 
         [Header("Throw")]
         [SerializeField] private float throwCooldown;
-        [SerializeField] private float throwTimer;
-        private bool doneThrowing = true;
+        private float throwTimer;
+        public bool doneThrowing { get; private set; }
 
         [Header("Spin")]
         [SerializeField] private float spinSpeed;
@@ -28,12 +28,16 @@ namespace ClawBrawl
         [SerializeField] private float spinCooldown;
         private float spinTimer;
         private bool isSpinning;
-        private bool canSpin = true;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             player = GetComponent<PlayerMovement>();
+        }
+
+        private void Start()
+        {
+            doneThrowing = true;
         }
 
         private void Update()

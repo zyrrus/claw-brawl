@@ -7,28 +7,33 @@ namespace ClawBrawl
     public class HoleController : MonoBehaviour
     {
         private static float radius;
-        private bool isActive = true;
+        [SerializeField] private GameObject player;
+        private PlayerEnd playerEnd;
 
         private CapsuleCollider moleCollider;
-
         [SerializeField] private GameObject mole;
         [SerializeField] private GameObject hole;
-
-        private MeshRenderer holeMesh;
+        private Renderer holeMesh;
+        private Renderer moleMesh;
         [SerializeField] private Material holeMat;
         [SerializeField] private Material decoyMat;
 
-        [Range(0, 1), SerializeField] private float chanceDecoy;
         private bool isDecoy = false;
+        [Range(0, 1), SerializeField] private float chanceDecoy;
+
 
         private void Awake()
         {
             moleCollider = GetComponent<CapsuleCollider>();
-            holeMesh = hole.GetComponent<MeshRenderer>();
+            holeMesh = hole.GetComponent<Renderer>();
+            moleMesh = mole.GetComponent<Renderer>();
         }
 
         private void Start()
         {
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerEnd = player.GetComponent<PlayerEnd>();
+
             radius = Vector3.Distance(GameObject.FindGameObjectWithTag("Radius").transform.position, Vector3.zero);
             Respawn();
         }
@@ -36,7 +41,7 @@ namespace ClawBrawl
         private void OnTriggerEnter(Collider other)
         {
             if (isDecoy)
-                Explode(other.gameObject.transform.parent.gameObject);
+                Explode();
             Respawn();
         }
 
@@ -55,9 +60,14 @@ namespace ClawBrawl
             isDecoy = rand < (chanceDecoy * 100);
         }
 
-        private void ChangeAppearance()
+        private void ChangeDecoyAppearance()
         {
-            holeMesh.material = (isDecoy) ? decoyMat : holeMat;
+            holeMesh.material.color = (isDecoy) ? decoyMat.color : holeMat.color;
+        }
+
+        private void ChangeMoleModel()
+        {
+            moleMesh.material.color = Random.ColorHSV();
         }
 
         // GameObject controllers
@@ -80,9 +90,9 @@ namespace ClawBrawl
             EnableMole();
         }
 
-        private void Explode(GameObject player)
+        private void Explode()
         {
-            player.GetComponent<PlayerEnd>().Explode(transform.position);
+            playerEnd.Explode(transform.position);
         }
 
         private void Move()
@@ -98,20 +108,19 @@ namespace ClawBrawl
         private void DeactivateHole()
         {
             hole.SetActive(false);
-            ChangeAppearance();
+            ChangeDecoyAppearance();
+            ChangeMoleModel();
             DisableMole();
         }
 
         private void EnableMole()
         {
-            isActive = true;
             moleCollider.enabled = true;
             mole.SetActive(true);
         }
 
         private void DisableMole()
         {
-            isActive = false;
             moleCollider.enabled = false;
             mole.SetActive(false);
         }
