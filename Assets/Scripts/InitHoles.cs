@@ -13,6 +13,7 @@ namespace ClawBrawl
 
         [SerializeField] private GameObject holePrefab;
         [SerializeField] private int maxPoints;
+        [Range(0, 1), SerializeField] public float chanceDecoy;
 
         private void Start()
         {

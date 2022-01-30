@@ -17,9 +17,9 @@ namespace ClawBrawl
         private Renderer moleMesh;
         [SerializeField] private Material holeMat;
         [SerializeField] private Material decoyMat;
-
         private bool isDecoy = false;
-        [Range(0, 1), SerializeField] private float chanceDecoy;
+
+        private static float chanceDecoy;
 
 
         private void Awake()
@@ -33,6 +33,8 @@ namespace ClawBrawl
         {
             player = GameObject.FindGameObjectWithTag("Player");
             playerEnd = player.GetComponent<PlayerEnd>();
+
+            chanceDecoy = transform.parent.gameObject.GetComponent<InitHoles>().chanceDecoy;
 
             radius = Vector3.Distance(GameObject.FindGameObjectWithTag("Radius").transform.position, Vector3.zero);
             Respawn();

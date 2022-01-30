@@ -16,11 +16,13 @@ namespace ClawBrawl
         [SerializeField] private float dashCooldown;
         private float dashTimer;
         private bool canDash = true;
+        [SerializeField] private IconCooldown dashIcon;
 
         [Header("Throw")]
         [SerializeField] private float throwCooldown;
-        private float throwTimer;
+        [SerializeField] private float throwTimer;
         public bool doneThrowing { get; private set; }
+        [SerializeField] private IconCooldown throwIcon;
 
         [Header("Spin")]
         [SerializeField] private float spinSpeed;
@@ -28,6 +30,7 @@ namespace ClawBrawl
         [SerializeField] private float spinCooldown;
         private float spinTimer;
         private bool isSpinning;
+        [SerializeField] private IconCooldown spinIcon;
 
         private void Awake()
         {
@@ -47,10 +50,15 @@ namespace ClawBrawl
             // Update timer
             if (dashTimer >= 0)
                 dashTimer -= Time.deltaTime;
+            else
+                dashIcon.Color();
 
             /// === Throw =================================================
+            Debug.Log($"{throwTimer}; {doneThrowing}; {weapon.CanThrow()}");
             if (throwTimer >= 0)
                 throwTimer -= Time.deltaTime;
+            else if (doneThrowing && weapon.CanThrow())
+                throwIcon.Color();
 
             if (!doneThrowing && weapon.CanThrow())
             {
@@ -63,6 +71,8 @@ namespace ClawBrawl
             // Update timer
             if (spinTimer >= -spinCooldown)
                 spinTimer -= Time.deltaTime;
+            else
+                spinIcon.Color();
 
             // Stop spin
             if (spinTimer <= 0)
@@ -81,6 +91,8 @@ namespace ClawBrawl
             if (!context.performed) return;
             if (isSpinning || !canDash || dashTimer > 0) return;
 
+            dashIcon.Dim();
+
             rb.AddForce(transform.forward * dashStrength, ForceMode.Impulse);
             dashTimer = dashCooldown;
         }
@@ -90,6 +102,8 @@ namespace ClawBrawl
             if (!context.performed) return;
             if (isSpinning || !weapon.CanThrow() || throwTimer > 0) return;
 
+            throwIcon.Dim();
+
             doneThrowing = false;
             weapon.Throw();
         }
@@ -98,6 +112,8 @@ namespace ClawBrawl
         {
             if (!context.performed) return;
             if (!doneThrowing || isSpinning || spinTimer > -spinCooldown) return;
+
+            spinIcon.Dim();
 
             spinTimer = spinDuration;
             player.doFacing = false;
