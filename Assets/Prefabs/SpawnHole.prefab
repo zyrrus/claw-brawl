@@ -26,10 +26,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3759926789544645425}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 2, y: 3, z: 2}
   m_Children: []
-  m_Father: {fileID: 2737975788211781130}
+  m_Father: {fileID: 3312598655005208329}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6449268191466468954
@@ -89,9 +89,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2737975788211781130}
-  - component: {fileID: 295769210792554115}
+  - component: {fileID: 3312598655005208329}
   - component: {fileID: 5542653657032757833}
+  - component: {fileID: 295769210792554115}
   m_Layer: 0
   m_Name: SpawnHole
   m_TagString: Untagged
@@ -99,8 +99,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2737975788211781130
-RectTransform:
+--- !u!4 &3312598655005208329
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,26 +115,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.25}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &295769210792554115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3929180350793834678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3772275fdafeaa0818dd7bd1a14de361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bcParent: {fileID: 0}
-  mole: {fileID: 3759926789544645425}
-  hole: {fileID: 3929180351564908087}
 --- !u!136 &5542653657032757833
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -149,6 +129,23 @@ CapsuleCollider:
   m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 3, z: 0}
+--- !u!114 &295769210792554115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3929180350793834678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3772275fdafeaa0818dd7bd1a14de361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mole: {fileID: 3759926789544645425}
+  hole: {fileID: 3929180351564908087}
+  holeMat: {fileID: 2100000, guid: 99288e045191feaeaa085cf8d61bd3c5, type: 2}
+  decoyMat: {fileID: 2100000, guid: c5e775b26fb70b8bca22e1513bfe2524, type: 2}
+  chanceDecoy: 0.508
 --- !u!1 &3929180351564908087
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +175,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 0.25, z: 3}
   m_Children: []
-  m_Father: {fileID: 2737975788211781130}
+  m_Father: {fileID: 3312598655005208329}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3929180351564908091

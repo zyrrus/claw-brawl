@@ -4,27 +4,39 @@ using UnityEngine;
 
 namespace ClawBrawl
 {
-    public class HoleManager : MonoBehaviour
+    public class HoleController : MonoBehaviour
     {
+        private static float radius;
         private bool isActive = true;
+
         private CapsuleCollider moleCollider;
-        [SerializeField] private BoxCollider bcParent;
+
         [SerializeField] private GameObject mole;
         [SerializeField] private GameObject hole;
+
+        private MeshRenderer holeMesh;
+        [SerializeField] private Material holeMat;
+        [SerializeField] private Material decoyMat;
+
+        [Range(0, 1), SerializeField] private float chanceDecoy;
+        private bool isDecoy = false;
 
         private void Awake()
         {
             moleCollider = GetComponent<CapsuleCollider>();
+            holeMesh = hole.GetComponent<MeshRenderer>();
         }
 
         private void Start()
         {
-            bcParent = transform.parent.gameObject.GetComponent<BoxCollider>();
+            radius = Vector3.Distance(GameObject.FindGameObjectWithTag("Radius").transform.position, Vector3.zero);
             Respawn();
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            if (isDecoy)
+                Explode(other.gameObject.transform.parent.gameObject);
             Respawn();
         }
 
@@ -32,15 +44,27 @@ namespace ClawBrawl
 
         private Vector3 GenRandomVector()
         {
-            float x = Random.Range(bcParent.bounds.min.x, bcParent.bounds.max.x);
-            float z = Random.Range(bcParent.bounds.min.z, bcParent.bounds.max.z);
-            return new Vector3(x, 0, z);
+            float r = Random.Range(1, radius);
+            float theta = Random.Range(0, 360);
+            return new Vector3(r * Mathf.Cos(theta), 0, r * Mathf.Sin(theta));
+        }
+
+        private void RollDecoyChance()
+        {
+            float rand = Random.Range(0, 101);
+            isDecoy = rand < (chanceDecoy * 100);
+        }
+
+        private void ChangeAppearance()
+        {
+            holeMesh.material = (isDecoy) ? decoyMat : holeMat;
         }
 
         // GameObject controllers
 
         public void Respawn()
         {
+            RollDecoyChance();
             StartCoroutine(_Respawn());
         }
 
@@ -56,6 +80,11 @@ namespace ClawBrawl
             EnableMole();
         }
 
+        private void Explode(GameObject player)
+        {
+            player.GetComponent<PlayerEnd>().Explode(transform.position);
+        }
+
         private void Move()
         {
             transform.position = GenRandomVector();
@@ -69,6 +98,7 @@ namespace ClawBrawl
         private void DeactivateHole()
         {
             hole.SetActive(false);
+            ChangeAppearance();
             DisableMole();
         }
 
