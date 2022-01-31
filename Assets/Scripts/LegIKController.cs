@@ -9,14 +9,68 @@ namespace ClawBrawl
         public static Transform body;
 
         public Transform transform;
+        public Vector3 relativeOriginalPos;
+        public Vector3 lastPos;
+        private float distanceToBody;
+        private float tolerance = 0.4f;
         public Ray ray;
 
         public Leg(Transform t)
         {
             this.transform = t;
 
-            float footSpacing = transform.position.x - body.position.x;
-            this.ray = new Ray(body.position + (body.right * footSpacing), Vector3.down);
+            this.lastPos = transform.position;
+            this.relativeOriginalPos = body.position - transform.position;
+
+            this.distanceToBody = GetDistToBody(transform.position);
+
+            // float footSpacing = transform.position.x - body.position.x;
+
+            // this.ray = new Ray(body.position + new Vector3(relativeOriginalPos.x, 0, relativeOriginalPos.z), Vector3.down);
+        }
+
+        public bool IsBalanced()
+        {
+            float currentDist = GetDistToBody(transform.position);
+            return distanceToBody - (tolerance / 2) <= currentDist && currentDist <= distanceToBody + (tolerance / 2);
+        }
+
+        private float GetDistToBody(Vector3 b)
+        {
+            return Vector3.Distance(body.position, b);
+        }
+
+        private void Step()
+        {
+            Debug.Log($"Stepping: current = {transform.position}; desired = {body.position + relativeOriginalPos}");
+
+            relativeOriginalPos.y = 0;
+            Vector3 nextStep = Quaternion.LookRotation(body.forward, body.up) * -relativeOriginalPos;
+
+
+            transform.position = body.position + nextStep;
+        }
+
+        public void Update()
+        {
+            if (IsBalanced())
+                // Stick to the ground
+                transform.position = lastPos;
+            else Step();
+
+            lastPos = transform.position;
+        }
+
+        public void DrawGizmos()
+        {
+            Gizmos.color = IsBalanced() ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(transform.position, 0.2f);
+
+            // Gizmos.color = Color.blue;
+            // Gizmos.DrawRay(new Ray(body.position + new Vector3(relativeOriginalPos.x, 0, relativeOriginalPos.z), Vector3.down));
+
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(body.position + Quaternion.LookRotation(body.forward, body.up) * relativeOriginalPos, 0.2f);
         }
     }
 
@@ -24,6 +78,7 @@ namespace ClawBrawl
     {
         [SerializeField] private List<Leg> legs = new List<Leg>();
         [SerializeField] private Transform body;
+        private Vector3 lastBodyPos;
 
         private void Awake()
         {
@@ -32,9 +87,11 @@ namespace ClawBrawl
 
         private void Start()
         {
+            lastBodyPos = body.transform.position;
+
             foreach (Transform child in transform)
             {
-                legs.Add(new Leg(child));
+                legs.Add(new Leg(child.GetChild(0)));
             }
         }
 
@@ -42,18 +99,15 @@ namespace ClawBrawl
         {
             foreach (Leg leg in legs)
             {
-                if (Physics.Raycast(leg.ray, out RaycastHit info, 10, LayerMask.GetMask("Terrain")))
-                {
-                    leg.transform.position = info.point;
-                }
-                // Transform target = leg.GetChild(0).transform;
-                // RaycastHit info;
-                // Vector3 root = target.position;
-                // root.y += 10;
-                // if (Physics.Raycast(root, Vector3.down, out info))
-                // {
-                // }
+                leg.Update();
+            }
+        }
 
+        private void OnDrawGizmos()
+        {
+            foreach (Leg leg in legs)
+            {
+                leg.DrawGizmos();
             }
         }
     }
