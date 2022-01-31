@@ -23,10 +23,6 @@ namespace ClawBrawl
             this.relativeOriginalPos = body.position - transform.position;
 
             this.distanceToBody = GetDistToBody(transform.position);
-
-            // float footSpacing = transform.position.x - body.position.x;
-
-            // this.ray = new Ray(body.position + new Vector3(relativeOriginalPos.x, 0, relativeOriginalPos.z), Vector3.down);
         }
 
         public bool IsBalanced()
@@ -42,11 +38,8 @@ namespace ClawBrawl
 
         private void Step()
         {
-            Debug.Log($"Stepping: current = {transform.position}; desired = {body.position + relativeOriginalPos}");
-
             relativeOriginalPos.y = 0;
             Vector3 nextStep = Quaternion.LookRotation(body.forward, body.up) * -relativeOriginalPos;
-
 
             transform.position = body.position + nextStep;
         }
@@ -65,9 +58,6 @@ namespace ClawBrawl
         {
             Gizmos.color = IsBalanced() ? Color.green : Color.red;
             Gizmos.DrawWireSphere(transform.position, 0.2f);
-
-            // Gizmos.color = Color.blue;
-            // Gizmos.DrawRay(new Ray(body.position + new Vector3(relativeOriginalPos.x, 0, relativeOriginalPos.z), Vector3.down));
 
             Gizmos.color = Color.black;
             Gizmos.DrawSphere(body.position + Quaternion.LookRotation(body.forward, body.up) * relativeOriginalPos, 0.2f);
