@@ -45,6 +45,7 @@ namespace ClawBrawl
             if (isDecoy)
                 Explode();
             Respawn();
+            playerEnd.IncrementScore();
         }
 
         // Utilities
