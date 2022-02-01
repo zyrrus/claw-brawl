@@ -672,7 +672,7 @@ MonoBehaviour:
   radiusObj: {fileID: 406367047}
   showBoxGizmo: 1
   holePrefab: {fileID: 3929180350793834678, guid: 7d2eec4d99d0bb64a936146d3084653a, type: 3}
-  maxPoints: 5
+  maxPoints: 10
   chanceDecoy: 0.23
 --- !u!4 &500940129
 Transform:

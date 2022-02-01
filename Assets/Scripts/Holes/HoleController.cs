@@ -14,7 +14,6 @@ namespace ClawBrawl
         [SerializeField] private GameObject mole;
         [SerializeField] private GameObject hole;
         private Renderer holeMesh;
-        private Renderer moleMesh;
         [SerializeField] private Material holeMat;
         [SerializeField] private Material decoyMat;
         private bool isDecoy = false;
@@ -26,7 +25,6 @@ namespace ClawBrawl
         {
             moleCollider = GetComponent<CapsuleCollider>();
             holeMesh = hole.GetComponent<Renderer>();
-            moleMesh = mole.GetComponent<Renderer>();
         }
 
         private void Start()
@@ -68,11 +66,6 @@ namespace ClawBrawl
             holeMesh.material.color = (isDecoy) ? decoyMat.color : holeMat.color;
         }
 
-        private void ChangeMoleModel()
-        {
-            moleMesh.material.color = Random.ColorHSV();
-        }
-
         // GameObject controllers
 
         public void Respawn()
@@ -112,7 +105,6 @@ namespace ClawBrawl
         {
             hole.SetActive(false);
             ChangeDecoyAppearance();
-            ChangeMoleModel();
             DisableMole();
         }
 

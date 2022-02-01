@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1b8bfc62f4999c92f92d7baeed152042, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,11 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3772275fdafeaa0818dd7bd1a14de361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   mole: {fileID: 3759926789544645425}
   hole: {fileID: 3929180351564908087}
   holeMat: {fileID: 2100000, guid: 99288e045191feaeaa085cf8d61bd3c5, type: 2}
   decoyMat: {fileID: 2100000, guid: c5e775b26fb70b8bca22e1513bfe2524, type: 2}
-  chanceDecoy: 0.508
 --- !u!1 &3929180351564908087
 GameObject:
   m_ObjectHideFlags: 0
