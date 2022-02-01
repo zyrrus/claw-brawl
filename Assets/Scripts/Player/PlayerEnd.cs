@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TMPro;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 namespace ClawBrawl
 {
@@ -9,9 +10,6 @@ namespace ClawBrawl
     {
         private Rigidbody rb;
         private AbilityController ac;
-        private static int sessionHighestScore = 0;
-        private int currentScore;
-        [SerializeField] private TextMeshProUGUI scoreUI;
         [SerializeField] private float killHeight;
         [SerializeField] private float explodeStrength;
 
@@ -19,7 +17,6 @@ namespace ClawBrawl
         {
             rb = GetComponent<Rigidbody>();
             ac = GetComponent<AbilityController>();
-            currentScore = 0;
         }
 
         private void Update()
@@ -30,21 +27,8 @@ namespace ClawBrawl
 
         private void GameOver()
         {
-            // Change Scene to game over
-            // Reset goes back to main
-            if (sessionHighestScore < currentScore)
-            {
-                Debug.Log($"New high score: {currentScore}; Old HS: {sessionHighestScore}");
-                sessionHighestScore = currentScore;
-                currentScore = 0;
-            }
-            transform.position = new Vector3(0, 10, 0);
-        }
-
-        public void IncrementScore()
-        {
-            currentScore++;
-            scoreUI.
+            ScoreContainer.Instance.HandleGameOver();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
         public void Explode(Vector3 origin)
